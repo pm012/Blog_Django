@@ -4,16 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog Posts</title>
+    {% if user.is_authenticated %}
+        Hello, {{ user.username }}
+    {% else %}
+        <a href="{% url 'users:login' %}">Login</a>
+    {% endif %}
+
 </head>
 <body>
     <h1>Blog Posts</h1>
-    <a href="{% url 'new_post' %}">Create New Post</a>
+    <a href="{% url 'blogs:new_post' %}">Create New Post</a>
     <ul>
         {% for post in posts %}
             <li>
                 <h2>{{ post.title }}</h2>
                 <p>{{ post.text }}</p>
-                <a href="{% url 'edit_post' post.id %}">Edit</a>
+                <a href="{% url 'blogs:edit_post' post.id %}">Edit</a>
             </li>
         {% empty %}
             <li>No blog posts available.</li>
