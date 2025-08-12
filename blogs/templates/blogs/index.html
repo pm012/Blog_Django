@@ -1,17 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog Posts</title>
-    {% if user.is_authenticated %}
-        Hello, {{ user.username }}
-    {% else %}
-        <a href="{% url 'users:login' %}">Login</a>
-    {% endif %}
+{% extends "blogs/base.html" %}
 
-</head>
-<body>
+  {% block content %}
     <h1>Blog Posts</h1>
     <a href="{% url 'blogs:new_post' %}">Create New Post</a>
     <ul>
@@ -25,5 +14,4 @@
             <li>No blog posts available.</li>
         {% endfor %}
     </ul>
-</body>
-</html>
+{% endblock %}

@@ -11,7 +11,7 @@ def new_post(request):
         form = BlogPostForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('index')
+            return redirect('blogs:index')
     else:
         form = BlogPostForm()
     return render(request, 'blogs/new_post.html', {'form': form})
@@ -22,7 +22,7 @@ def edit_post(request, post_id):
         form = BlogPostForm(request.POST, instance=post)
         if form.is_valid():
             form.save()
-            return redirect('index')
+            return redirect('blogs:index')
     else:
         form = BlogPostForm(instance=post)
     return render(request, 'blogs/edit_post.html', {'form': form})
