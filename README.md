@@ -8,3 +8,4 @@
 7. Add registration +/authentication system +
 8. Add logout functionality + (Note: django 5 requires logout via post form for security)
 9. Registered user should see his name (+) and unregistered should be able to navigate to Login page (+) or Sign up page +
+10. Implement registration
