@@ -28,6 +28,11 @@ def new_post(request):
     return render(request, 'blogs/new_post.html', {'form': form})
 
 @login_required
+def posts(request):
+    posts = BlogPost.objects.filter(owner=request.user)
+    return render(request, 'blogs/posts.html', {'posts': posts})
+
+@login_required
 def edit_post(request, post_id):
     post = get_object_or_404(BlogPost, id=post_id)
     check_blog_ownership(request, post)

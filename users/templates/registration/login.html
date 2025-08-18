@@ -1,16 +1,23 @@
 {% extends "blogs/base.html" %}
+{% load django_bootstrap5 %}
+{% block page_header %}
+<h1 class="display-3">Login</h1>
+<p class="lead">Please enter your username and password to log in.</p>
+{% endblock page_header %}
+
 {% block content %}
+<form method="post" action="{% url 'users:login' %}" class="form">
 
-{% if form.errors %}
-    <p> Your username and password didn't match. Please try again.</p>
-{% endif %}
 
-<form method="post" action="{% url 'users:login' %}">
     {% csrf_token %}
-    {{ form.as_p}}
+    {%bootstrap_form form%}
+    
+    <button name="submit" class="btn btn-primary">Login</button>
+    
 
-    <button name="submit">Login</button>
-    <input type="hidden" name="next"
-    value="{% url 'blogs:index' %}" />
+    {% if form.errors %}
+    <p> Your username and password didn't match. Please try again.</p>
+    {% endif %}
+    <input type="hidden" name="next" value="{% url 'blogs:index' %}" />
 </form>
 {% endblock content %}
