@@ -1,0 +1,1 @@
+web: guinicorn blogs.wsgi --log-file -

@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: my-django-app
+    env: python
+    buildCommand: "./manage.py collectstatic --noinput"
+    startCommand: "gunicorn blogs.wsgi"
