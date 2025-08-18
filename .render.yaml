@@ -3,4 +3,4 @@ services:
     name: my-django-app
     env: python
     buildCommand: "./manage.py collectstatic --noinput"
-    startCommand: "gunicorn blogs.wsgi"
+    startCommand: "gunicorn django_blog.wsgi"
