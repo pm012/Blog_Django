@@ -27,7 +27,7 @@
                     <a class="nav-link" href = "{% url 'blogs:posts' %}">Review your posts</a>
                 </li>
                 <li class="nav-item">
-                    <span class="nav-link disabled">Welcome, {{ user.username }}!</span>
+                    <span class="nav-link disabled">Welcome, {{ user.first_name }}!</span>
                 </li>
                 <li class="nav-item">
                     <form method="post" action="{% url 'users:logout' %}" style="display:inline;">

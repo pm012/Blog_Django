@@ -9,9 +9,8 @@ def check_blog_ownership(request, post):
     if post.owner != request.user:
         raise Http404("You do not have permission to edit this post.")
 
-@login_required
-def index(request):
-    posts = BlogPost.objects.filter(owner=request.user)  # Only show posts for the logged-in user
+
+def index(request):    
     return render(request, 'blogs/index.html', {'posts': posts})
 
 def new_post(request):

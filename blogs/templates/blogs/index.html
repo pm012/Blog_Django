@@ -2,7 +2,7 @@
 {% block page_header %}
     <h1 class="display-3">Blog Posts</h1>
 
-  <p class="lead">Welcome {{ user.username }}! to the blog! Here you can create any record to your journal and 
+  <p class="lead">Welcome {{ user.first_name }} {{user.last_name}}! to the blog! Here you can create any record to your journal and 
     find all the latest posts.</p>
     {% if user.is_authenticated %}
         <p class="lead">You can also create a new post.</p>

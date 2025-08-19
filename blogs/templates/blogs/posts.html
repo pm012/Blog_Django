@@ -9,12 +9,12 @@
             <li>
                 <h2>{{ post.title }}</h2>
                 <p>{{ post.text }}</p>
-                <a href="{% url 'blogs:edit_post' post.id %}">Edit</a>
+                <a class="btn btn-lg btn-secondary" colour ="red" href="{% url 'blogs:edit_post' post.id %}">Edit</a>
             </li>
         {% empty %}
             <li>No blog posts available.</li>
         {% endfor %}
     </ul>
 
-<h3><a href="{% url 'blogs:new_post' %}">Add new post</a></h3>
+<h3><a class = "btn btn-lg btn-primary" href="{% url 'blogs:new_post' %}">Add new post</a></h3>
 {% endblock content %}

@@ -1,11 +1,48 @@
 {% extends 'blogs/base.html' %}
 
 {% block content %}
-<form method="post" action="{% url 'users:register' %}">
-    {% csrf_token %}
-    {{ form.as_p}}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center mb-4">Register</h2>
 
-    <button name="submit"> Register</button>
-    <input type="hidden" name="next" value="{% url 'blogs:index' %}" />
-</form>
+            <form method="post" action="{% url 'users:register' %}" class="p-4 border rounded shadow-sm">
+                {% csrf_token %}
+
+                {% for field in form %}
+                <div class="form-group mb-3">
+                    {{ field.label_tag }}
+                    {{ field }}
+                    {% if field.help_text %}
+                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <div class="text-danger small">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger mt-3" role="alert">
+                    {% for error in form.non_field_errors %}
+                        <div>{{ error }}</div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <div class="d-grid gap-2 mt-4">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+                <input type="hidden" name="next" value="{% url 'blogs:index' %}" />
+            </form>
+
+            <div class="text-center mt-3">
+                <p>Already have an account? <a href="{% url 'users:login' %}">Login here</a>.</p>
+                <p class="small">By registering, you agree to our <a href="{% url 'users:terms' %}">Terms of Service</a>.</p>
+                <p class="small">We value your privacy. Read our <a href="{% url 'users:privacy' %}">Privacy Policy</a>.</p>
+                <p class="small">Need help? Visit our <a href="{% url 'users:help' %}">Help Center</a>.</p>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}
