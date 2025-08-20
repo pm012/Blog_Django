@@ -13,6 +13,7 @@ def check_blog_ownership(request, post):
 def index(request):    
     return render(request, 'blogs/index.html', {'posts': posts})
 
+@login_required
 def new_post(request):
     if request.method == 'POST':
         form = BlogPostForm(request.POST)
