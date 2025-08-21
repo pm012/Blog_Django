@@ -5,16 +5,57 @@
 {% endblock page_header %}
 {% block content %}
 <ul>
-        {% for post in posts %}
-            <li>
-                <h2>{{ post.title }}</h2>
-                <p>{{ post.text }}</p>
-                <a class="btn btn-lg btn-secondary" colour ="red" href="{% url 'blogs:edit_post' post.id %}">Edit</a>
-            </li>
-        {% empty %}
-            <li>No blog posts available.</li>
-        {% endfor %}
-    </ul>
+    {% for post in posts %}
+    <li>
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.text }}</p>
+        {% if user.is_authenticated %}
+        <span><a class="btn btn-lg btn-secondary" href="{% url 'blogs:edit_post' post.id %}">Edit</a> </span>
+        <!--form action="{% url 'blogs:delete_post' post.id %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-lg btn-danger"
+                onclick="return confirm('Are you sure you want to delete the post: \'{{ post.title|escapejs }}\'?');">
+                Delete
+            </button>
+        </form-->
+        <!-- Trigger button -->
+        <button type="button" class="btn btn-lg btn-danger" data-bs-toggle="modal"
+            data-bs-target="#deleteModal{{ post.id }}">
+            Delete
+        </button>
 
-<h3><a class = "btn btn-lg btn-primary" href="{% url 'blogs:new_post' %}">Add new post</a></h3>
+        <!-- Modal -->
+        <div class="modal fade" id="deleteModal{{ post.id }}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered"> <!-- centered vertically -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Delete Post</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to delete "{{ post.title }}"?
+                    </div>
+                    <div class="modal-footer">
+                        <form action="{% url 'blogs:delete_post' post.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger">Yes, delete</button>
+                        </form>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Modal -->
+
+        {% else %}
+        <p>Written by {{post.owner}}</p>
+        {% endif %}
+    </li>
+    {% empty %}
+    <li>No blog posts available.</li>
+    {% endfor %}
+</ul>
+{% if user.is_authenticated %}
+<h3><a class="btn btn-lg btn-primary" href="{% url 'blogs:new_post' %}">Add new post</a></h3>
+{% endif %}
 {% endblock content %}

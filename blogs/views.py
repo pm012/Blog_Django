@@ -22,14 +22,17 @@ def new_post(request):
             post.owner = request.user  # Set the owner to the logged-in user
             post.save()
             #form.save()
-            return redirect('blogs:index')
+            return redirect('blogs:posts')
     else:
         form = BlogPostForm()
     return render(request, 'blogs/new_post.html', {'form': form})
 
-@login_required
+
 def posts(request):
-    posts = BlogPost.objects.filter(owner=request.user)
+    if not request.user.is_authenticated:
+        posts = BlogPost.objects.all()
+    else:
+        posts = BlogPost.objects.filter(owner=request.user)
     return render(request, 'blogs/posts.html', {'posts': posts})
 
 @login_required
@@ -40,7 +43,21 @@ def edit_post(request, post_id):
         form = BlogPostForm(request.POST, instance=post)
         if form.is_valid():
             form.save()
-            return redirect('blogs:index')
+            return redirect('blogs:posts')
     else:
         form = BlogPostForm(instance=post)
     return render(request, 'blogs/edit_post.html', {'form': form})
+
+@login_required
+def delete_post(request, post_id):
+    post = get_object_or_404(BlogPost, id=post_id)
+    check_blog_ownership(request, post)
+
+    if request.method == 'POST':  # Only allow deletion via POST
+        post.delete()
+        return redirect('blogs:posts')  # Redirect to posts list
+
+    # If accessed via GET (e.g., typing URL manually), deny
+    raise Http404("Invalid request method.")
+
+
