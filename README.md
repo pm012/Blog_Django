@@ -22,8 +22,11 @@
 3. Added ability to delete posts for user
  
 
-21.08.25 TBD:
+22.08.25:
+1. Implemented profile page
+
+23.08.205 TBD:
 1. Make posts to display as a table: Topic, Body (50 symbols and ... at the end), Date modified, actions (view, update, delete)
 2. Implement post preview functionality and View entire post template
-3. User profile
+3. User profile modification
 4. Forgot password, email confirmation
