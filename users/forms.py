@@ -37,9 +37,12 @@ class CustomUserCreationForm(UserCreationForm):
         return user
     
 class ProfileForm(forms.ModelForm):
-    avatar = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control-file'}), required=False)
+    avatar = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control'}), required=False)
 
     class Meta:
         model = Profile
         fields = ['avatar']
+        widgets = {
+            'avatar': forms.FileInput(attrs={'class': 'form-control'}),
+        }
 
