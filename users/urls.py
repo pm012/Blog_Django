@@ -20,4 +20,5 @@ urlpatterns = [
     path("terms/", auth_views.TemplateView.as_view(template_name="users/terms.html"), name="terms"),
     path("privacy/", auth_views.TemplateView.as_view(template_name="users/privacy.html"), name="privacy"),
     path("help/", auth_views.TemplateView.as_view(template_name="users/help.html"), name="help"),
+    path("profile/", views.profile, name="profile"),
 ]
