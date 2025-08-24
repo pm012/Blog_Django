@@ -43,6 +43,6 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         fields = ['avatar']
         widgets = {
-            'avatar': forms.FileInput(attrs={'class': 'form-control'}),
+            'avatar': forms.ClearableFileInput(attrs={'class': 'form-control'}),
         }
 

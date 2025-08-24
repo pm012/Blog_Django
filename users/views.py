@@ -30,6 +30,11 @@ def profile(request):
     """Display and update user profile"""
     profile, created = Profile.objects.get_or_create(user=request.user)
     if request.method == 'POST':
+        if "reset_avatar" in request.POST:
+            profile.avatar = "profile_images/default_avatar.png"
+            profile.save()
+            return redirect("users:profile")
+        
         form = ProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()

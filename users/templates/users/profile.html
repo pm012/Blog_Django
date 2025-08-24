@@ -4,7 +4,12 @@
 
 <div>
     <h1>Profile page: {{user.username}}</h1>
-    <img src="{{ user.profile.avatar.url }}" alt="avatar of user"/>
+    {% if user.profile.avatar %}
+    <img src="{{ user.profile.avatar.url }}" alt="avatar" width="150" height="150">
+    {% else %}
+    <img src="{{ MEDIA_URL }}profile_images/default_avatar.png" alt="default avatar" width="150" height="150">
+    {% endif %}
+
 </div>
 
 {% if messages %}
@@ -21,11 +26,19 @@
         <label for="id_avatar" class="form-label">Change Avatar:</label>
         {{ profile_form.avatar }}
         {% if profile_form.avatar.errors %}
-            <div class="text-danger">{{ profile_form.avatar.errors }}</div>
+        <div class="text-danger">{{ profile_form.avatar.errors }}</div>
         {% endif %}
     </div>
-    <button type="submit" class="btn btn-primary">Save Changes</button>
-    <button type="reset" class="btn btn-secondary">Reset</button>
+    <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save Changes</button>
+</form>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" name="reset_avatar">Reset to Default</button>
+</form>
 </form>
 
 
