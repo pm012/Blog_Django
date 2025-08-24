@@ -27,8 +27,10 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'unsecure-default-key')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
 #DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+DEBUG = False
+
 
 ALLOWED_HOSTS = ["*"]  # Allow all hosts for development; adjust in production
 
@@ -50,8 +52,22 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+WHITENOISE_ROOT = os.path.join(BASE_DIR, 'media')
+WHITENOISE_MAX_AGE = 315360000 if not DEBUG else 0  # 10 years for production
+
+# WhiteNoise configuration
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+}
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
